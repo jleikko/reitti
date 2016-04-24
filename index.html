@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+<title>Reitti</title>
+<style type="text/css">
+	html, body {
+		padding: 0px;
+		margin: 0px;
+		overflow: hidden;
+		height: 100%;
+		width: 100%;
+	}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="jschannel.js"></script>
+<script src="rpc-client.min.js"></script>
+</head>
+<body><iframe id="oskari" src="http://www.paikkatietoikkuna.fi/published/fi/aa5064a8-00e0-4397-b499-8380e23c49fc" frameborder="0" style="border: none; width: 100%; height: 100%;" width="100%" height="100%"></iframe>
+
+<script>
+
+function getRoute() {
+	return [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [ [ 384595.759, 6681506.318 ],
+  [ 384698.304, 6681552.726 ],
+  [ 384672.831, 6681544.049 ],
+  [ 384699.269, 6681556.526 ],
+  [ 384658.625, 6681539.342 ],
+  [ 384611.401, 6681512.25 ],
+  [ 384566.717, 6681510.767 ],
+  [ 384630.193, 6681523.987 ],
+  [ 384576.826, 6681508.355 ],
+  [ 384698.772, 6681566.051 ],
+  [ 384689.874, 6681610.049 ],
+  [ 384643.452, 6681530.172 ],
+  [ 384489.219, 6681521.439 ],
+  [ 384523.008, 6681511.925 ],
+  [ 384530.418, 6681511.522 ],
+  [ 384435.232, 6681528.612 ],
+  [ 384496.939, 6681517.448 ],
+  [ 384582.401, 6681507.319 ],
+  [ 384558.858, 6681512.566 ],
+  [ 384411.208, 6681530.241 ],
+  [ 384425.356, 6681531.942 ],
+  [ 384427.501, 6681529.725 ],
+  [ 384413.663, 6681532.564 ],
+  [ 384455.482, 6681532.408 ],
+  [ 384466.174, 6681531.266 ],
+  [ 384449.631, 6681531.78 ],
+  [ 384549.976, 6681513.398 ],
+  [ 384512.222, 6681514.508 ],
+  [ 384593.496, 6681505.978 ],
+  [ 384475.046, 6681529.799 ],
+  [ 384485.537, 6681526.104 ],
+  [ 384400.366, 6681525.792 ],
+  [ 384384.464, 6681533.349 ],
+  [ 384480.6, 6681528.082 ],
+  [ 384390.252, 6681531.419 ],
+  [ 384504.21, 6681515.275 ],
+  [ 384402.337, 6681525.272 ],
+  [ 384539.982, 6681514.172 ],
+  [ 384426.481, 6681530.823 ],
+  [ 384429.815, 6681528.045 ],
+  [ 384574.939, 6681508.573 ],
+  [ 384401.114, 6681525.208 ],
+  [ 384677.628, 6681545.252 ],
+  [ 384607.314, 6681509.717 ],
+  [ 384428.567, 6681528.673 ],
+  [ 384439.749, 6681530.356 ],
+  [ 384432.271, 6681526.716 ],
+  [ 384422.555, 6681533.945 ],
+  [ 384365.214, 6681540.89 ],
+  [ 384417.903, 6681534.644 ],
+  [ 384106.446, 6681999.899 ],
+  [ 384317.547, 6681540.513 ],
+  [ 384355.166, 6681541.124 ],
+  [ 384109.676, 6681982.898 ],
+  [ 384314.945, 6681540.418 ],
+  [ 384112.597, 6681973.875 ],
+  [ 384304.588, 6681540.886 ],
+  [ 384372.153, 6681539.241 ],
+  [ 384347.49, 6681541.666 ],
+  [ 384379.214, 6681535.72 ] ]
+            }
+        }
+    ];
+}
+
+function drawRoute() {
+        var geojsonObject = {
+          'type': 'FeatureCollection',
+          'crs': {
+            'type': 'name',
+            'properties': {
+              'name': 'EPSG:3067'
+            }
+          },
+          'features': [
+            {
+              'type': 'Feature',
+              'geometry': {
+                'type': 'Point',
+                'coordinates': [384743.629,
+                        6681677.290]
+              },
+              'properties': {
+                'test_property': 'Start / Finish'
+              }
+
+            }
+
+          ]
+        };
+
+    var testOptions = {
+        'minResolution': 0,
+        'maxResolution': 1000
+    };
+    var params = [geojsonObject, {
+            clearPrevious: true,
+            layerOptions: testOptions,
+            centerTo: true,
+            featureStyle: {
+                fill: {
+                    color: '#ff0000'
+                },
+                stroke : {
+                    color: '#ff0000',
+                    width: 1
+                },
+                text : {
+                    scale : 1,
+                    fill : {
+                        color : 'rgba(142,196,73,1)'
+                    },
+                    stroke : {
+                        color : 'rgba(14,104,59,1)',
+                        width : 2
+                    },
+                    labelProperty: 'test_property'
+                },
+            prio: 4,
+            minScale: 1451336
+        }}];
+
+    channel.postRequest(
+        'MapModulePlugin.AddFeaturesToMapRequest',
+        params
+    );
+    channel.log('MapModulePlugin.AddFeaturesToMapRequest posted with data', params);
+
+    var route = getRoute();
+
+    var geojsonObject2 = {
+          'type': 'FeatureCollection',
+          'crs': {
+            'type': 'name',
+            'properties': {
+              'name': 'EPSG:3067'
+            }
+          },
+          'features': route
+        };
+
+    var testOptions2 = {
+        'minResolution': 0,
+        'maxResolution': 1000
+    };
+    var params2 = [geojsonObject2, {
+            clearPrevious: false,
+            layerOptions: testOptions2,
+            centerTo: true,
+            featureStyle: {
+                stroke : {
+                    color: '#0E683B',
+                    width: 5
+                }
+            },
+            prio: 1
+        }];
+
+
+    channel.postRequest(
+        'MapModulePlugin.AddFeaturesToMapRequest',
+        params2
+    );
+    channel.log('MapModulePlugin.AddFeaturesToMapRequest posted with data', params2);
+               
+}
+
+
+// init connection
+var IFRAME_DOMAIN = "http://www.paikkatietoikkuna.fi";
+var iFrame = document.getElementById('oskari');
+var channel = OskariRPC.connect(
+    iFrame,
+    IFRAME_DOMAIN
+);
+channel.onReady(function() {
+    //channel is now ready and listening.
+    channel.log('Map is now listening');
+    var expectedOskariVersion = '1.35.0';
+    channel.isSupported(expectedOskariVersion, function(blnSupported) {
+        if(blnSupported) {
+            channel.log('Client is supported and Oskari version is ' + expectedOskariVersion);
+        } else {
+            channel.log('Oskari-instance is not the one we expect (' + expectedOskariVersion + ') or client not supported');
+            // getInfo can be used to get the current Oskari version
+            channel.getInfo(function(oskariInfo) {
+                channel.log('Current Oskari-instance reports version as: ', oskariInfo);
+            });
+        }
+    });
+    channel.isSupported(function(blnSupported) {
+        if(!blnSupported) {
+            channel.log('Oskari reported client version (' + OskariRPC.VERSION + ') is not supported.' +
+            'The client might work, but some features are not compatible.');
+        } else {
+            channel.log('Client is supported by Oskari.');
+        }
+    });
+    drawRoute();
+});
+</script>
+</body>
+</html>
